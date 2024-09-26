@@ -4,3 +4,7 @@ numpy
 pandas
 matplotlib
 beautifulsoup4 
+hdfs
+grpcio
+google-api-python-client
+grpcio-status

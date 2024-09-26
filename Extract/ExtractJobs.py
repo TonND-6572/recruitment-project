@@ -9,7 +9,11 @@ import os
 
 link = 'https://glints.com/vn/job-category/{}?page={}'
 
-class Driver():
+class ExtractJobs():
+    r"""
+        Get all job links
+        :param job_category: str job category you want to extract 
+    """
     def __init__(self, job_category):
         self.driver = webdriver.Chrome()
         self.failed = 0
@@ -41,6 +45,7 @@ class Driver():
                         pass
 
             time.sleep(6)
+        return self.jobLinks
 
     def dump(self):
         directory = 'Data/{}'.format(self.job_category)
@@ -53,7 +58,7 @@ class Driver():
 
 if __name__ == '__main__':
     job_category = 'computer-information-technology'
-    driver = Driver(job_category)
+    driver = ExtractJobs(job_category)
     driver.getJobLink()
     driver.dump()
     print(driver.failed)

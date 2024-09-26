@@ -8,17 +8,21 @@ import time
 import json
 import os
 import random
+import argparse
 
-class Driver():
+arg = argparse.ArgumentParser()
+arg.add_argument("--link", required=False, help="provide job link you want to extract")
+
+
+class ExtractJobDetail():
     def __init__(self, job_category):
         self.driver = webdriver.Chrome()
         self.failed = []
         self.job_category = job_category
         self.jobLinks = []
-        self.getJobLink(job_category)
         
-    def getJobLink(self, job_category):
-        linkpath = "Data/{}".format(job_category)
+    def getJobLink(self):
+        linkpath = "Data/{}".format(self.job_category)
         assert os.path.exists(linkpath), "Directory not exist"
 
         for filename in os.listdir(linkpath):
@@ -29,9 +33,23 @@ class Driver():
 
                     if isinstance(data, list):
                         self.jobLinks.extend(data)
+
+    def getJobDescription(self, link):
+        assert self.driver.current_url.startswith(link) == True, "URL not match"
+        
+        wait = WebDriverWait(self.driver, 10)
+        see_more_button = wait.until(EC.presence_of_element_located((
+            By.XPATH, '//div[starts-with(@class, "DraftjsReadMoresc__ReadMoreButton")]/button'
+        )))
+
+        if see_more_button: see_more_button.click()
+        description = wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, '//div[@aria-label="Job Description"]//span[@data-text="true"]')))
+
+        return "\n".join([i.text for i in description])
     
     # Job Title, Job Salary, Job Experience, Education, Location and Arrangement, Skills, Company & hirer name, Company links, Category, Company location
-    def extractJobDetail(self, link):
+    def getJobDetail(self, link):
         self.driver.get(link)
         wait = WebDriverWait(self.driver, 10)
         job = dict()
@@ -91,7 +109,7 @@ class Driver():
 
         for link in tqdm(self.jobLinks):
             try:
-                job = self.extractJobDetail(link)
+                job = self.getJobDetail(link)
                 json.dump(job, open(path + "/job_" + str(counter) + ".json", "w", encoding="utf-8"), indent=4, ensure_ascii=False)
                 counter += 1
             except:
@@ -105,8 +123,12 @@ class Driver():
         self.driver.close()
 
 if __name__ == "__main__":
+    args = arg.parse_args()
     job_category = "computer-information-technology"
-    driver = Driver(job_category)
-    driver.dumps()
+    driver = ExtractJobDetail(job_category)
+    driver.getJobLink()
+    link = args.link if args.link is not None else driver.jobLinks[0]
+    print(driver.getJobDetail(link))
+    print(driver.getJobDescription(link))
     print(driver.failed) if len(driver.failed) > 0 else print("Success")
     driver.close()
