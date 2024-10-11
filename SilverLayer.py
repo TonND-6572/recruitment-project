@@ -3,12 +3,14 @@ from hdfsDriver.Driver import Driver
 
 import pandas as pd 
 import argparse
+import os 
+import json
 
 args = argparse.ArgumentParser()
 args.add_argument('--source-path', type=str, default='/recruitment/bronze/glints/computer-information-technology/2024/09/09/', required=False)
 args.add_argument("--jobCategory", type=str, default="computer-information-technology", required=False)
 args.add_argument("--source", type=str, default="glints", required=False)
-args.add_argument('--timeExecute', type=str)
+args.add_argument('--timeExecute', type=str, required=True)
 
 arg = args.parse_args()
 timeExecute = arg.timeExecute.split('-') # YYYY-MM-DD
@@ -16,7 +18,7 @@ year = timeExecute[0]
 month = timeExecute[1]
 day = timeExecute[2]
 
-destination = "/recruitment/silver/{}/{}/{}/{}/{}/".format(arg.source, arg.jobCategory, year, month, day)
+destination = "/recruitment/silver/source={}/jobCategory={}/year={}/month={}/day={}/".format(arg.source, arg.jobCategory, year, month, day)
 
 if __name__ == "__main__":
     driver = Driver(url="http://wakuwa:9870", user="hadoop")
@@ -29,6 +31,8 @@ if __name__ == "__main__":
     new_df["t_salary"] = df["Salary"].apply(lambda x: extract_salary(x[0]))
     new_df["avg_salary"] = new_df["t_salary"].apply(lambda x: (x[0] + x[1]) / 2)
     new_df["currency"] = new_df["t_salary"].apply(lambda x: x[2].replace("₫", "VND"))
+    new_df["min_salary"] = new_df["t_salary"].apply(lambda x: x[0])
+    new_df["max_salary"] = new_df["t_salary"].apply(lambda x: x[1])
 
     # 5 range [0, 5*1e6, 1.2*1e7, 2.0*1e7, 2.7*1e7]
     bins = [0, 5e6, 1.2e7, 2.0e7, 2.7e7, float('inf')]
@@ -56,7 +60,7 @@ if __name__ == "__main__":
     new_df['Created_time'] = pd.to_datetime(new_df['Created_time'], format='%d-%m-%Y %H:%M:%S')
     new_df['Last_updated'] = new_df.apply(lambda x: ajdust_day(x['num_day'], x['day'], x['Created_time']), axis=1)
 
-    drop_cols = ['t_salary', 't_location', 'Company', 'Link', 'Location', 'Salary', 'num_day', 'day']
+    drop_cols = ['t_salary', 't_location', 'Company', 'Link', 'Location', 'Salary', 'num_day', 'day', 'avg_salary', 'currency', 'salary_VND']
     new_df.drop(columns=drop_cols, inplace=True)
 
     # new_df.to_csv('./Data/computer-information-technology/silver_layer.csv', index=False)
