@@ -1,4 +1,7 @@
-# coding=utf-8
+# coding=utf-8 
+# source = https://github.com/tienlonghungson/BigData-HDFS-Spark-Elasticsearch-Kibana/blob/main/src/patterns.py
+# Author: Tien Long Hung Son
+# Date: 2021-09-09
 framework_plattforms = ['Docker', 'OSP', 'Premiere', 'directAdmin', 'typography', 'Prometheus', 'visual weight', 'Kubernetes', 'JDBC', 'UnitTest',
             'Servlets', 'cPanel', 'MySQL', '.NET', 'Ruby on Rails', 'JSP', 'IdentityServer', 'VoIP', 'AdobeXD', 'CMake', 'Autocad',
             'Spring', 'Django', 'CRM', 'K8S', 'Nginx', 'firmware', 'Google Trend', 'psd', 'CSRF', 'Reactjs', 'Struts', 'WebSocket',
@@ -18,8 +21,8 @@ knowledges = ['game', 'Jira', 'lắp đặt', 'interaction design', 'đồ họa
                ' TCP', 'qa', 'Animate', 'crypto', 'CI/CD', 'Defi', 'frontend', 'sửa chữa', 'SVN', 'phần cứng', ' sync',
                'Powerpoint', 'smart contract', 'Linux', 'SCM', 'backend', 'Marketing', 'XSS', 'Photoshop', 'HTTP', 'Word', 'router', 'IOS',
                'WebSocket', 'thuật toán', 'TestRail', 'CSDL', 'Sketch', 'blockchains', 'multithreading', 'hướng đối tượng', 'Front-end',
-
                'latex', 'Restful', 'Subversion', 'java web', 'Mobile', 'Excel']
+
 knowledge_groups={
     "blockchain_crypto":["blockchains","crypto","NFT","smart contract","Solidity", "Defi",'XSS', " Security " ]    ,
     "office":["Word", "Excel","Powerpoint","Office"],
