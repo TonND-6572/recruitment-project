@@ -1,6 +1,7 @@
-from Extract.ExtractJobs import ExtractJobs
-from Extract.ExtractJobDetail import ExtractJobDetail
-from hdfsDriver.Driver import Driver
+from src.Extract.ExtractJobs import ExtractJobs
+from src.Extract.ExtractJobDetail import ExtractJobDetail
+from src.hdfsDriver.Driver import Driver
+
 import json
 import argparse
 import re

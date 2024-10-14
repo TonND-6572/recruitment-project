@@ -1,5 +1,5 @@
-from util.util import *
-from hdfsDriver.Driver import Driver
+from src.utils.utils import *
+from src.hdfsDriver.Driver import Driver
 
 import pandas as pd 
 import argparse
