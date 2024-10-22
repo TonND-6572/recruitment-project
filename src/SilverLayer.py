@@ -1,10 +1,9 @@
-from util.util import *
+from utils.utils import *
 from hdfsDriver.Driver import Driver
+from utils.udfs import *
 
 import pandas as pd 
 import argparse
-import os 
-import json
 
 args = argparse.ArgumentParser()
 args.add_argument('--source-path', type=str, default='/recruitment/bronze/glints/computer-information-technology/2024/09/09/', required=False)
@@ -54,14 +53,18 @@ if __name__ == "__main__":
     new_df['work_time_type'] = new_df['t_location'].apply(lambda x: x[2])
     new_df['company_name'] = df['Company'].apply(lambda x: x.split('·')[1].strip())
 
+    #labeling
+    new_df['framework'] = df['jobDecription'].apply(lambda x: extract_framework_plattform(x))
+    new_df['language'] = df['jobDecription'].apply(lambda x: extract_language(x))
+
     ### transfrom date
     new_df['num_day'] = df['Last_updated'].apply(lambda x: x.split(' ')[2])
     new_df['day'] = df['Last_updated'].apply(lambda x: x.split(' ')[3])
     new_df['Created_time'] = pd.to_datetime(new_df['Created_time'], format='%d-%m-%Y %H:%M:%S')
     new_df['Last_updated'] = new_df.apply(lambda x: ajdust_day(x['num_day'], x['day'], x['Created_time']), axis=1)
 
-    drop_cols = ['t_salary', 't_location', 'Company', 'Link', 'Location', 'Salary', 'num_day', 'day', 'avg_salary', 'currency', 'salary_VND']
+    drop_cols = ['t_salary', 't_location', 'Company', 'Link', 'Location', 'Salary', 'num_day', 'day', 'avg_salary', 'currency', 'salary_VND', 'jobDecription']
     new_df.drop(columns=drop_cols, inplace=True)
 
-    # new_df.to_csv('./Data/computer-information-technology/silver_layer.csv', index=False)
-    driver.write(destination+arg.jobCategory+'.csv', new_df, 'csv')
+    new_df.to_csv('./Data/computer-information-technology/new_silver_layer.csv', index=False)
+    # driver.write(destination+arg.jobCategory+'.csv', new_df, 'csv')
