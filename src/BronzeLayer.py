@@ -9,15 +9,23 @@ import time
 import random
 from tqdm import tqdm
 
-url = "http://wakuwa:9870"
-user = "hadoop"
+
 
 arg = argparse.ArgumentParser()
+arg.add_argument("--hdfs_url", type=str, required=True)
+arg.add_argument("--user", type=str, default='hadoop', required=True)
 arg.add_argument("--jobCategory", type=str, default="computer-information-technology", required=False)
 arg.add_argument("--source", type=str, default="glints", required=False)
 arg.add_argument("--timeExecute", type=str)
 
 args = arg.parse_args()
+
+# url = "http://wakuwa:9870" (example)
+# user = "hadoop"
+
+url = args.url
+user = args.user
+
 job_category = args.jobCategory
 timeExecute = args.timeExecute.split('-') # YYYY-MM-DD
 year = timeExecute[0]
