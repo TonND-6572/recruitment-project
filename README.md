@@ -8,13 +8,25 @@ This project provides a ETL solution to efficiently extract, transform, and load
 - [System Setup](#system-setup)
 - [Results](#results)
 
-## Overview
-This ETL pipeline performs the following steps:
-1. Scrapes recruitment data from Glints using Selenium.
-2. Stores the raw data in Hadoop HDFS via the [HDFS Driver](./src/hdfsDriver/Driver.py).
-3. Transforms data using Pandas and stores it in the "silver" layer in HDFS, preparing it for analysis.
-4. Aggregates data according to specific user requirements and loads it into Apache Hive using PySpark in remote mode.
-5. Visualizes data in Apache Hive using Power BI.
+# ETL Pipeline Overview
+
+This ETL pipeline carries out the following key steps:
+
+1. **Data Extraction**  
+   Scrapes recruitment data from Glints using Selenium for efficient and automated collection.
+
+2. **Raw Data Storage**  
+   Saves the extracted raw data directly into Hadoop HDFS via the [HDFS Driver](./src/hdfsDriver/Driver.py), preserving the original dataset.
+
+3. **Data Transformation**  
+   Cleans and transforms the data using Pandas, storing the processed data in the "silver" layer in HDFS, optimizing it for analysis.
+
+4. **Data Aggregation**  
+   Aggregates and refines the transformed data based on specific user requirements, then loads it into Apache Hive using PySpark in remote mode for seamless integration.
+
+5. **Data Visualization**  
+   Connects to Apache Hive from Power BI to visualize the aggregated data, enabling interactive and insightful data analysis.
+
 
 ## Architecture
 ![Pipeline Architecture](assets/architecture.png)
