@@ -1,6 +1,6 @@
 # Remote Client-Based Recruitment ETL Pipeline with Hadoop, Hive, PySpark, and Selenium
 
-This project provides a robust ETL solution to efficiently extract, transform, and load recruitment data from Glints into a medallion architecture, utilizing Apache Hadoop and Apache Hive. It integrates a powerful toolset, including Hadoop, Hive, Spark, Selenium, and Power BI, to streamline data processing and visualization.
+This project provides a ETL solution to efficiently extract, transform, and load recruitment data from Glints into a medallion architecture, utilizing Apache Hadoop and Apache Hive. It integrates a powerful toolset, including Hadoop, Hive, Spark, Selenium, and Power BI, to streamline data processing and visualization.
 ## Table of Contents
 - [Overview](#overview)
 - [Architecture](#architecture)
