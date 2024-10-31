@@ -8,7 +8,7 @@ This project provides a ETL solution to efficiently extract, transform, and load
 - [System Setup](#system-setup)
 - [Results](#results)
 
-# ETL Pipeline Overview
+## Overview
 
 This ETL pipeline carries out the following key steps:
 
